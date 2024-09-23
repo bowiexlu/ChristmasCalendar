@@ -1,29 +1,40 @@
 const calendar = document.getElementById('calendar-body');
 
 // Generate 24 doors
+let doors = [];
 for (let i = 1; i <= 24; i++) {
     let door = `<div class="calendar-door" onclick="openDoor(${i})">${i}</div>`;
-    calendar.innerHTML += door;
+    doors.push(door); 
 }
 
+// Shuffle the doors array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Shuffle the doors and append them to the calendar-body
+const shuffledDoors = shuffleArray(doors);
+calendar.innerHTML = shuffledDoors.join(''); 
 
 // Check the date then open the door
 function openDoor(day) {
     let today = new Date().getDate();
     
     if(day > today) {
-        alert("Tålamod!")
+        alert("Tålamod!");
     } else {
-        let door = document.querySelector(`.calendar-door:nth-child(${day})`);
-
         // Popup a new window if the door can be opened
         let popupWindow = window.open("", "popupWindow" + day, `width=500,height=650`);
 
-        // Display a image randomly
+        // Display a random image
         const randomImage = Math.floor(Math.random() * 3) + 1;
         const imagePath = `img/bild${randomImage}.jpg`;
 
-        // Edit the content of door such as text and image
+        // Display the content in the popup window 
         popupWindow.document.write(`
             <html>
             <head>
@@ -44,38 +55,8 @@ function openDoor(day) {
             </html>
         `);
 
-        // Disable click function to prevent repeated clicks
+        // Disable the click function to prevent repeated clicks
+        let door = document.querySelector(`.calendar-door:nth-child(${day})`);
         door.onclick = null;
     }
 }
-
-// Randomly shuffle the order of doors
-(function($){
- 
-    $.fn.shuffle = function() {
- 
-        var allElems = this.get(),
-            getRandom = function(max) {
-                return Math.floor(Math.random() * max);
-            },
-            shuffled = $.map(allElems, function(){
-                var random = getRandom(allElems.length),
-                    randEl = $(allElems[random]).clone(true)[0];
-                allElems.splice(random, 1);
-                return randEl;
-           });
- 
-        this.each(function(i){
-            $(this).replaceWith($(shuffled[i]));
-        });
- 
-        return $(shuffled);
- 
-    };
- 
-})(jQuery);
-$('ul#list li').shuffle();
-
-$(document).ready(function() {
-    $('#calendar-body .calendar-door').shuffle();
-});

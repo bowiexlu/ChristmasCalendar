@@ -1,10 +1,14 @@
-Julkalender för Webbshop
+# Project Name: Julkalender för Webbshop
 
-HTML/CSS
+
+## Live Demo 
+https://bowiexlu.github.io/ChristmasCalendar/
+
+
+## This is the description of my project:
 
 Skapa ett botten för din kalender i HTML
 Skapa en lucka i HTML och ge den önskad form.
-Javascript
 
 Skapa en loop som kör 24 ggr (loops)
 I loopen, “targetta” din spelplan och skriv in HTML-koden för luckan du skapade med innerHTML. (targeting, writing to DOM)
